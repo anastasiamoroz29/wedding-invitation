@@ -139,7 +139,7 @@ function resetForm() {
 
 // ===== 7. ОТПРАВКА ФОРМЫ НА СЕРВЕР =====
 // ===== НАСТРОЙКИ =====
-const API_BASE = 'https://wedding-invitation29.onrender.com';
+const API_BASE = 'https://wedding-invitation29.onrender.com/api';
 
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('rsvpForm');
