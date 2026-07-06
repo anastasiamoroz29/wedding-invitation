@@ -1,0 +1,30 @@
+# Node.js
+node_modules/
+npm-debug.log*
+package-lock.json
+yarn-debug.log*
+yarn-error.log*
+
+# База данных
+*.db
+*.sqlite
+*.sqlite3
+
+# Файлы окружения
+.env
+.env.local
+.env.*.local
+
+# Системные файлы Mac
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Логи
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/

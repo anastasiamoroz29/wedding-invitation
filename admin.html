@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список гостей</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            font-family: 'Karst', 'Cormorant Garamond', serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Karst', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: #000000;
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+            font-family: 'Karst', serif;
+            font-size: 18px;
+            color: #666;
+            margin-top: 6px;
+            font-weight: 300;
+        }
+
+        .header .update-info {
+            font-family: 'Karst', serif;
+            font-size: 14px;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #f8f8f8;
+            padding: 25px 20px;
+            text-align: center;
+            border: 1px solid #e5e5e5;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            background: #f0f0f0;
+        }
+
+        .stat-card .number {
+            font-family: 'Karst', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: #000000;
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-card .label {
+            font-family: 'Karst', serif;
+            font-size: 16px;
+            color: #666;
+            margin-top: 8px;
+            font-weight: 300;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            border: 1px solid #e5e5e5;
+            background: #fafafa;
+        }
+
+        .controls .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .controls .right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 22px;
+            border: 1px solid #000000;
+            background: transparent;
+            font-family: 'Karst', serif;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: #000000;
+            letter-spacing: 0.5px;
+            border-radius: 20px;
+        }
+
+        .btn:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .btn-primary {
+            background: #000000;
+            color: #ffffff;
+            border-radius: 20px;
+        }
+
+        .btn-primary:hover {
+            background: #333333;
+            border-color: #333333;
+        }
+
+        .btn-success {
+            border-color: #000000;
+            border-radius: 20px;
+        }
+
+        .btn-success:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .search-input {
+            padding: 8px 16px;
+            border: 1px solid #e5e5e5;
+            font-family: 'Karst', serif;
+            font-size: 16px;
+            outline: none;
+            background: #ffffff;
+            min-width: 180px;
+            color: #000000;
+            border-radius: 20px;
+        }
+
+        .search-input:focus {
+            border-color: #000000;
+        }
+
+        .filter-select {
+            padding: 8px 16px;
+            border: 1px solid #e5e5e5;
+            font-family: 'Karst', serif;
+            font-size: 16px;
+            outline: none;
+            background: #ffffff;
+            cursor: pointer;
+            color: #000000;
+            border-radius: 20px;
+        }
+
+        .filter-select:focus {
+            border-color: #000000;
+        }
+
+        .table-wrapper {
+            border: 1px solid #e5e5e5;
+            overflow-x: auto;
+            background: #ffffff;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Karst', serif;
+            font-size: 15px;
+        }
+
+        thead {
+            background: #f8f8f8;
+            border-bottom: 2px solid #000000;
+        }
+
+        thead th {
+            color: #000000;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            font-size: 13px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #fafafa;
+        }
+
+        tbody td {
+            padding: 12px 16px;
+            vertical-align: middle;
+            color: #222;
+        }
+
+        .guest-name {
+            font-weight: 400;
+            font-size: 18px;
+            color: #000000;
+        }
+
+        .guest-email {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .guest-phone {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .guest-count {
+            display: inline-block;
+            padding: 2px 12px;
+            border: 1px solid #e5e5e5;
+            font-size: 15px;
+            color: #000000;
+            border-radius: 4px;
+        }
+
+        .guest-comment {
+            color: #555;
+            font-size: 14px;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .guest-date {
+            color: #888;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 14px;
+            border: 1px solid #000000;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            border-radius: 4px;
+        }
+
+        .status-confirmed {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .status-pending {
+            background: transparent;
+            color: #000000;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .action-btns .btn-sm {
+            padding: 4px 12px;
+            font-size: 14px;
+            border: 1px solid #e5e5e5;
+            background: transparent;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Karst', serif;
+            color: #000000;
+            border-radius: 16px;
+            min-width: 32px;
+            text-align: center;
+        }
+
+        .action-btns .btn-sm:hover {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        .btn-confirm {
+            border-color: #000000;
+        }
+
+        .btn-confirm:hover {
+            background: #000000 !important;
+            color: #ffffff !important;
+        }
+
+        .btn-unconfirm {
+            border-color: #000000;
+        }
+
+        .btn-unconfirm:hover {
+            background: #000000 !important;
+            color: #ffffff !important;
+        }
+
+        .btn-delete {
+            border-color: #e5e5e5;
+        }
+
+        .btn-delete:hover {
+            background: #000000 !important;
+            color: #ffffff !important;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state .icon {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-family: 'Karst', serif;
+            font-size: 28px;
+            color: #000000;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-family: 'Karst', serif;
+            font-size: 18px;
+            color: #888;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 14px 28px;
+            border: 1px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            font-family: 'Karst', serif;
+            font-size: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 0.4s;
+            z-index: 9999;
+            border-radius: 20px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .toast.error {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .toast.info {
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .stat-card .number {
+                font-size: 36px;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 12px 15px;
+            }
+
+            .controls .left,
+            .controls .right {
+                justify-content: center;
+            }
+
+            .search-input {
+                min-width: 100%;
+            }
+
+            thead th {
+                font-size: 11px;
+                padding: 8px 10px;
+            }
+
+            tbody td {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            .guest-name {
+                font-size: 15px;
+            }
+
+            .guest-comment {
+                max-width: 100px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 5px;
+            }
+
+            .header {
+                padding: 20px 10px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .stats-grid {
+                gap: 8px;
+            }
+
+            .stat-card {
+                padding: 12px 10px;
+            }
+
+            .stat-card .number {
+                font-size: 28px;
+            }
+
+            .stat-card .label {
+                font-size: 12px;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            thead th {
+                font-size: 9px;
+                padding: 6px 6px;
+            }
+
+            tbody td {
+                padding: 6px 6px;
+                font-size: 11px;
+            }
+
+            .guest-name {
+                font-size: 13px;
+            }
+
+            .guest-count {
+                font-size: 11px;
+                padding: 1px 6px;
+            }
+
+            .guest-comment {
+                max-width: 60px;
+                font-size: 10px;
+            }
+
+            .guest-email,
+            .guest-phone {
+                font-size: 11px;
+            }
+
+            .action-btns .btn-sm {
+                padding: 2px 8px;
+                font-size: 10px;
+                min-width: 26px;
+            }
+
+            .status-badge {
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- HEADER -->
+        <div class="header">
+            <h1>Список гостей</h1>
+            <p class="subtitle">Подтверждения присутствия</p>
+            <p class="update-info">Последнее обновление: <span id="lastUpdate">—</span></p>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="number" id="totalGuests">0</span>
+                <span class="label">Всего ответов</span>
+            </div>
+            <div class="stat-card">
+                <span class="number" id="totalPeople">0</span>
+                <span class="label">Всего человек</span>
+            </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="controls">
+            <div class="left">
+                <button class="btn btn-primary" onclick="loadData()">Обновить</button>
+                <button class="btn" onclick="exportCSV()">CSV</button>
+                <button class="btn" onclick="exportJSON()">JSON</button>
+                <button class="btn btn-success" onclick="confirmAll()">Подтвердить всех</button>
+            </div>
+            <div class="right">
+                <input type="text" class="search-input" id="searchInput" placeholder="Поиск по имени..." oninput="filterTable()">
+                <select class="filter-select" id="statusFilter" onchange="filterTable()">
+                    <option value="all">Все</option>
+                    <option value="pending">Не подтверждены</option>
+                    <option value="confirmed">Подтверждены</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Имя</th>
+                        <th>Email</th>
+                        <th>Телефон</th>
+                        <th>Гостей</th>
+                        <th>Статус</th>
+                        <th>Комментарий</th>
+                        <th>Дата</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="guestsBody">
+                    <tr>
+                        <td colspan="9" style="text-align: center; padding: 60px 20px; color: #999; font-size: 20px;">
+                            Загрузка...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ===== НАСТРОЙКИ =====
+        const API_BASE = 'http://192.168.0.103:5001/api';
+        
+        const ADMIN_PASSWORD = '26072026'; // Придумайте пароль
+    
+    // Проверяем при загрузке страницы
+    (function checkAccess() {
+        const saved = sessionStorage.getItem('admin_access');
+        if (saved === 'true') return;
+        
+        const password = prompt('Введите пароль для доступа к админ-панели:');
+        if (password === ADMIN_PASSWORD) {
+            sessionStorage.setItem('admin_access', 'true');
+        } else {
+            alert('Неверный пароль!');
+            window.location.href = '/index.html'; // Перенаправление на главную
+        }
+    })();
+        let allGuests = [];
+
+        // ===== ЗАГРУЗКА ДАННЫХ =====
+        async function loadData() {
+            const tbody = document.getElementById('guestsBody');
+            tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 40px; color: #999; font-size: 20px;">Загрузка...</td></tr>`;
+
+            try {
+                const response = await fetch(`${API_BASE}/rsvp`);
+                const data = await response.json();
+
+                if (data.success) {
+                    allGuests = data.data;
+                    updateStats();
+                    renderTable(allGuests);
+                    document.getElementById('lastUpdate').textContent = new Date().toLocaleString('ru-RU');
+                    showToast('Данные обновлены', 'success');
+                } else {
+                    throw new Error('Ошибка загрузки данных');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" style="text-align: center; padding: 60px 20px;">
+                            <div class="empty-state">
+                                <span class="icon">✕</span>
+                                <h3>Не удалось подключиться</h3>
+                                <p>Убедитесь, что бэкенд запущен</p>
+                                <p style="margin-top: 10px; font-size: 14px; color: #999;">${API_BASE}</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                showToast('Ошибка подключения', 'error');
+            }
+        }
+
+        // ===== СТАТИСТИКА =====
+        function updateStats() {
+            const total = allGuests.length;
+            const people = allGuests.reduce((sum, g) => sum + g.guests_count, 0);
+
+            document.getElementById('totalGuests').textContent = total;
+            document.getElementById('totalPeople').textContent = people;
+        }
+
+        // ===== ОТРИСОВКА ТАБЛИЦЫ =====
+        function renderTable(guests) {
+            const tbody = document.getElementById('guestsBody');
+
+            if (!guests || guests.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" style="text-align: center; padding: 60px 20px;">
+                            <div class="empty-state">
+                                <span class="icon">—</span>
+                                <h3>Пока ни одного гостя</h3>
+                                <p>Заполните форму на сайте</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = guests.map((guest, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td><span class="guest-name">${guest.name}</span></td>
+                    <td class="guest-email">${guest.email || '—'}</td>
+                    <td class="guest-phone">${guest.phone || '—'}</td>
+                    <td><span class="guest-count">${guest.guests_count}</span></td>
+                    <td>
+                        <span class="status-badge ${guest.status === 'confirmed' ? 'status-confirmed' : 'status-pending'}">
+                            ${guest.status === 'confirmed' ? 'Подтвержден' : 'Не подтвержден'}
+                        </span>
+                    </td>
+                    <td class="guest-comment" title="${guest.comment || ''}">${guest.comment || '—'}</td>
+                    <td class="guest-date">${new Date(guest.created_at).toLocaleString('ru-RU')}</td>
+                    <td>
+                        <div class="action-btns">
+                            ${guest.status === 'pending' ? `<button class="btn-sm btn-confirm" onclick="confirmGuest(${guest.id})">✓</button>` : ''}
+                            ${guest.status === 'confirmed' ? `<button class="btn-sm btn-unconfirm" onclick="unconfirmGuest(${guest.id})">−</button>` : ''}
+                            <button class="btn-sm btn-delete" onclick="deleteGuest(${guest.id})">✕</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ===== ФИЛЬТРАЦИЯ =====
+        function filterTable() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const status = document.getElementById('statusFilter').value;
+
+            let filtered = allGuests;
+
+            if (search) {
+                filtered = filtered.filter(g => g.name.toLowerCase().includes(search));
+            }
+
+            if (status !== 'all') {
+                filtered = filtered.filter(g => g.status === status);
+            }
+
+            renderTable(filtered);
+        }
+
+        // ===== ПОДТВЕРДИТЬ ОДНОГО ГОСТЯ =====
+        async function confirmGuest(id) {
+            try {
+                const response = await fetch(`${API_BASE}/rsvp/${id}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'confirmed' })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showToast('Гость подтвержден', 'success');
+                    loadData();
+                } else {
+                    showToast('Ошибка подтверждения', 'error');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showToast('Ошибка подключения', 'error');
+            }
+        }
+
+        // ===== УБРАТЬ ИЗ ПОДТВЕРЖДЕННЫХ =====
+        async function unconfirmGuest(id) {
+            try {
+                const response = await fetch(`${API_BASE}/rsvp/${id}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'pending' })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showToast('Статус изменен на "Не подтвержден"', 'info');
+                    loadData();
+                } else {
+                    showToast('Ошибка изменения статуса', 'error');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showToast('Ошибка подключения', 'error');
+            }
+        }
+
+        // ===== УДАЛЕНИЕ ГОСТЯ =====
+        async function deleteGuest(id) {
+            const guest = allGuests.find(g => g.id === id);
+            if (!confirm(`Удалить гостя "${guest?.name || id}"?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/rsvp/${id}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showToast('Гость удален', 'info');
+                    loadData();
+                } else {
+                    showToast('Ошибка удаления', 'error');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showToast('Ошибка подключения', 'error');
+            }
+        }
+
+        // ===== ПОДТВЕРДИТЬ ВСЕХ =====
+        async function confirmAll() {
+            const pending = allGuests.filter(g => g.status === 'pending');
+            if (pending.length === 0) {
+                showToast('Нет гостей со статусом "Не подтвержден"', 'error');
+                return;
+            }
+
+            if (!confirm(`Подтвердить всех (${pending.length} гостей)?`)) {
+                return;
+            }
+
+            let successCount = 0;
+            for (const guest of pending) {
+                try {
+                    const response = await fetch(`${API_BASE}/rsvp/${guest.id}/status`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ status: 'confirmed' })
+                    });
+                    if (response.ok) {
+                        successCount++;
+                    }
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                }
+            }
+
+            showToast(`Подтверждено: ${successCount} из ${pending.length}`, 'success');
+            loadData();
+        }
+
+        // ===== ЭКСПОРТ CSV =====
+        function exportCSV() {
+            if (allGuests.length === 0) {
+                showToast('Нет данных для экспорта', 'error');
+                return;
+            }
+
+            const headers = ['ID', 'Имя', 'Email', 'Телефон', 'Гостей', 'Статус', 'Комментарий', 'Дата'];
+            const rows = allGuests.map(g => [
+                g.id,
+                g.name,
+                g.email || '',
+                g.phone || '',
+                g.guests_count,
+                g.status === 'confirmed' ? 'Подтвержден' : 'Не подтвержден',
+                g.comment || '',
+                new Date(g.created_at).toLocaleString('ru-RU')
+            ]);
+
+            const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `гости_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            showToast('CSV скачан', 'success');
+        }
+
+        // ===== ЭКСПОРТ JSON =====
+        function exportJSON() {
+            if (allGuests.length === 0) {
+                showToast('Нет данных для экспорта', 'error');
+                return;
+            }
+
+            const json = JSON.stringify(allGuests, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `гости_${new Date().toISOString().slice(0,10)}.json`;
+            link.click();
+            showToast('JSON скачан', 'success');
+        }
+
+        // ===== TOAST =====
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // ===== АВТООБНОВЛЕНИЕ =====
+        setInterval(loadData, 60000);
+
+        // ===== ЗАГРУЗКА ПРИ СТАРТЕ =====
+        loadData();
+    </script>
+
+</body>
+</html>

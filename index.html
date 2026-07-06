@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свадебное приглашение</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Marck+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Декоративные сердечки по бокам -->
+    <div class="hearts-left">
+        <img src="heart.png" alt="heart" class="heart-img">
+        <img src="heart2.png" alt="heart" class="heart-img">
+        <img src="heart3.png" alt="heart" class="heart-img">
+    </div>
+    <div class="hearts-right">
+        <img src="heart.png" alt="heart" class="heart-img">
+        <img src="heart2.png" alt="heart" class="heart-img">
+        <img src="heart3.png" alt="heart" class="heart-img">
+    </div>
+
+    <div class="wrapper">
+
+        <section class="hero fade">
+            <h2 class="left">Любовь это...</h2>
+            <img src="photo_1.png" alt="Наша фотография">
+            <h3 class="right">...совместные мечты</h3>
+        </section>
+
+        <section class="invite fade">
+            <div class="envelope">
+                <img src="envelope.png" alt="Конверт">
+            </div>
+        </section>
+
+        <section class="date fade">
+            <h1>26.7.26</h1>
+            <p>save the date</p>
+        </section>
+
+        <section class="place fade">
+            <p>
+                Трогательная церемония и <br>
+                последующий уютный вечер <br>
+                пройдут 26.07.26 в 14:30 <br>
+                в ресторане "Клубный дом" <br>
+                по адресу: <br>
+                <a href="https://yandex.ru/maps/10990/gelendgik/?ll=38.002336%2C44.583376&mode=poi&poi%5Bpoint%5D=38.004955%2C44.582744&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D186334561172&z=17.45" target="_blank" class="address-link">
+                    ул. Стартовая, 1 <br>
+                    Геленджик, Краснодарский край
+                </a>
+            </p>
+        </section>
+
+        <section class="photo fade">
+            <img src="flower_1.png" class="flower-img" alt="Цветок">
+            <img src="how_to_commute.png" class="htc-img" alt="Как добраться">
+            <p>what is done with love<br>is done well</p>
+            <img src="couple_2.png" alt="Пара">
+        </section>
+
+        <section class="details fade">
+            <h2>Детали</h2>
+            <img src="schedule_2.png" class="schedule-img" alt="Расписание">
+        </section>
+
+        <section class="rules fade">
+            <h2>Хочется, чтобы...</h2>
+            <p>
+                ...наши руки были свободны для объятий! Будем рады легким подаркам в конвертах.
+                <br><br>
+                ...каждый, кто хочет преподнести нам цветы, выбрал всего один цветок, который ассоциируется с нами. Так у нас получится один роскошный букет!
+                <br><br>
+                ...во время свадьбы действовал открытый микрофон, и каждый гость при желании мог сказать тост.
+                <br><br>
+                ...с нами были родные, близкие и их очаровательные детки! Для маленьких гостей предусмотрена игровая комната и аниматоры.
+            </p>
+        </section>
+
+        <section class="countdown fade">
+            <h2>Встретимся через</h2>
+            <div id="timer">
+                <div>
+                    <span id="days">00</span>
+                    <small>дней</small>
+                </div>
+                <div>
+                    <span id="hours">00</span>
+                    <small>часов</small>
+                </div>
+                <div>
+                    <span id="minutes">00</span>
+                    <small>минут</small>
+                </div>
+                <div>
+                    <span id="seconds">00</span>
+                    <small>секунд</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact fade">
+            <h2>по всем дополнительным вопросам обращайтесь <br> к организатору:</h2>
+            <img src="card.png" alt="Визитка">
+        </section>
+
+        <!-- ЕДИНСТВЕННАЯ СЕКЦИЯ RSVP -->
+        <section class="rsvp fade">
+            <h2>Если вы сможете присутствовать на нашей свадьбе, пожалуйста, заполните форму, нажав на кнопку ниже:</h2>
+            <a href="#" class="button" id="openModalBtn">ГОРЬКО!</a>
+        </section>
+
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО С HTML-ФОРМОЙ -->
+    <div id="rsvpModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-body">
+                <h2 id="modalTitle">Пожалуйста, подтвердите своё присутствие</h2>
+                
+                <form id="rsvpForm" class="rsvp-form">
+                    <div class="form-group">
+                        <label for="guestName">Имя и фамилия</label>
+                        <input type="text" id="guestName" name="name" placeholder="Например: Иван Петров" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="guestEmail">Email</label>
+                        <input type="email" id="guestEmail" name="email" placeholder="ivan@mail.ru">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="guestPhone">Телефон</label>
+                        <input type="tel" id="guestPhone" name="phone" placeholder="+7 999 123-45-67">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Количество гостей (включая вас)</label>
+                        <div class="guests-control">
+                            <button type="button" class="guest-btn" onclick="changeGuests(-1)">−</button>
+                            <span id="guestCount">2</span>
+                            <button type="button" class="guest-btn" onclick="changeGuests(1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="guestComment">Ваши пожелания или комментарии</label>
+                        <textarea id="guestComment" name="comment" rows="3" placeholder="Например: буду с мужем, без детей..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Я буду!</button>
+                </form>
+
+                <div id="formSuccess" style="display: none;">
+                    <p>Спасибо! Мы очень рады, что вы будете с нами!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
