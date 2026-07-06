@@ -10,22 +10,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Функция для получения локального IP
-function getLocalIP() {
-    const { networkInterfaces } = require('os');
-    const nets = networkInterfaces();
-    for (const name of Object.keys(nets)) {
-        for (const net of nets[name]) {
-            if (net.family === 'IPv4' && !net.internal) {
-                return net.address;
-            }
-        }
-    }
-    return 'localhost';
-}
-
-const localIP = getLocalIP();
-
 app.use(helmet({
     contentSecurityPolicy: false,
 }));
@@ -39,7 +23,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ===== РАЗДАЧА СТАТИЧЕСКИХ ФАЙЛОВ =====
-// Отдаем файлы из папки на уровень выше (где лежат index.html, admin.html)
 app.use(express.static(path.join(__dirname, '../')));
 
 // API маршруты
@@ -76,8 +59,5 @@ app.use((err, req, res, next) => {
 // ===== ЗАПУСК СЕРВЕРА =====
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Сервер запущен на порту ${PORT}`);
-    console.log(`📍 Локально: http://localhost:${PORT}`);
-    console.log(`📍 С телефона: http://${localIP}:${PORT}`);
-    console.log(`📋 Админка: http://${localIP}:${PORT}/admin.html`);
-    console.log(`📄 Сайт: http://${localIP}:${PORT}/index.html`);
+    console.log(`📍 http://localhost:${PORT}`);
 });
