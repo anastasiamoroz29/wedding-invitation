@@ -436,25 +436,30 @@ p {
         font-size: 24px;
     }
     
+    /* БОЛЬШЕ ОТСТУП СНИЗУ У "совместные мечты" */
+    .hero .right {
+        padding-bottom: 30px;
+    }
+    
     /* ДАТА — увеличенный шрифт и отступы */
     .date {
         padding: 0 15px 50px;
     }
     .date h1 {
-        font-size: 100px;
+        font-size: 120px;
         margin-top: -80px;
     }
     .date p {
-        font-size: 40px;
-        margin-top: -40px;
+        font-size: 50px;
+        margin-top: -50px;
     }
     
-    /* ФОТО — скрыта стрелочка, цветочек ниже */
+    /* ФОТО — скрыта стрелочка, цветочек ещё ниже */
     .photo .flower-img {
         width: 50px;
         height: auto;
         max-width: none;
-        margin: -130px auto 50px;
+        margin: -100px auto 60px;
     }
     .photo .htc-img {
         display: none;
@@ -504,7 +509,6 @@ p {
         line-height: 1.5;
     }
 }
-
 @media (max-width: 480px) {
     .hearts-left {
         left: 5px;
