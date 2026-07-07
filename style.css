@@ -454,19 +454,19 @@ p {
         margin-top: -50px;
     }
     
-    /* ФОТО — скрыта стрелочка, цветочек ещё ниже */
+    /* ФОТО — скрыта стрелочка, цветочек сильно ниже */
     .photo .flower-img {
         width: 50px;
         height: auto;
         max-width: none;
-        margin: -100px auto 60px;
+        margin: -50px auto 80px;  /* ← цветочек сильно ниже */
     }
     .photo .htc-img {
         display: none;
     }
     .photo p {
         font-size: 50px;
-        margin: 60px auto 20px;
+        margin: 40px auto 20px;
     }
     
     /* ТАЙМЕР */
