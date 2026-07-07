@@ -420,6 +420,91 @@ p {
     }
 }
 
+@media(max-width:390px) {
+    h1 {
+        font-size: 58px;
+    }
+    .hero h2,
+    .details h2,
+    .countdown h2 {
+        font-size: 38px;
+    }
+    h3 {
+        font-size: 28px;
+    }
+    p {
+        font-size: 24px;
+    }
+    
+    /* ДАТА — увеличенный шрифт и отступы */
+    .date {
+        padding: 0 15px 50px;
+    }
+    .date h1 {
+        font-size: 100px;
+        margin-top: -80px;
+    }
+    .date p {
+        font-size: 40px;
+        margin-top: -40px;
+    }
+    
+    /* ФОТО — скрыта стрелочка, цветочек ниже */
+    .photo .flower-img {
+        width: 50px;
+        height: auto;
+        max-width: none;
+        margin: -130px auto 50px;
+    }
+    .photo .htc-img {
+        display: none;
+    }
+    .photo p {
+        font-size: 50px;
+        margin: 60px auto 20px;
+    }
+    
+    /* ТАЙМЕР */
+    #timer div {
+        width: 60px;
+        height: 60px;
+    }
+    #timer span {
+        font-size: 28px;
+    }
+    #timer small {
+        font-size: 12px;
+    }
+    
+    /* КНОПКА */
+    .button {
+        font-size: 25px;
+        padding: 16px 40px;
+    }
+    
+    /* ПРАВИЛА */
+    .rules h2 {
+        font-size: 38px;
+    }
+    .rules p {
+        font-family: 'LagunaC', sans-serif;
+        font-size: 18px;
+        line-height: 1.7;
+    }
+    
+    /* КОНТАКТЫ */
+    .contact h2 {
+        font-size: 28px;
+    }
+    
+    /* RSVP */
+    .rsvp h2 {
+        font-family: 'LagunaC', sans-serif;
+        font-size: 22px;
+        line-height: 1.5;
+    }
+}
+
 @media (max-width: 480px) {
     .hearts-left {
         left: 5px;
