@@ -436,12 +436,10 @@ p {
         font-size: 24px;
     }
     
-    /* БОЛЬШЕ ОТСТУП СНИЗУ У "совместные мечты" */
     .hero .right {
         padding-bottom: 30px;
     }
     
-    /* ДАТА — увеличенный шрифт и отступы */
     .date {
         padding: 0 15px 50px;
     }
@@ -454,12 +452,11 @@ p {
         margin-top: -50px;
     }
     
-    /* ФОТО — скрыта стрелочка, цветочек сильно ниже */
     .photo .flower-img {
         width: 50px;
         height: auto;
         max-width: none;
-        margin: -70px auto -60px 125px /* ← цветочек сильно ниже */
+        margin: -70px auto 60px;
     }
     .photo .htc-img {
         display: none;
@@ -469,7 +466,6 @@ p {
         margin: 40px auto 20px;
     }
     
-    /* ТАЙМЕР */
     #timer div {
         width: 60px;
         height: 60px;
@@ -481,13 +477,11 @@ p {
         font-size: 12px;
     }
     
-    /* КНОПКА */
     .button {
         font-size: 25px;
         padding: 16px 40px;
     }
     
-    /* ПРАВИЛА */
     .rules h2 {
         font-size: 38px;
     }
@@ -497,18 +491,17 @@ p {
         line-height: 1.7;
     }
     
-    /* КОНТАКТЫ */
     .contact h2 {
         font-size: 28px;
     }
     
-    /* RSVP */
     .rsvp h2 {
         font-family: 'LagunaC', sans-serif;
         font-size: 22px;
         line-height: 1.5;
     }
 }
+
 @media (max-width: 480px) {
     .hearts-left {
         left: 5px;
@@ -576,69 +569,6 @@ p {
     }
     .heart-img {
         width: 55px;
-    }
-}
-
-@media(max-width:390px) {
-    h1 {
-        font-size: 58px;
-    }
-    .hero h2,
-    .details h2,
-    .countdown h2 {
-        font-size: 38px;
-    }
-    h3 {
-        font-size: 28px;
-    }
-    p {
-        font-size: 24px;
-    }
-    .photo .flower-img {
-        width: 60px;
-        height: auto;
-        max-width: none;
-        margin: -180px auto 70px;
-    }
-    .photo .htc-img {
-        width: 130px;
-        height: auto;
-        max-width: none;
-        margin: -200px auto 0 40px;
-    }
-    .photo p {
-        font-size: 70px;
-        margin: 90px auto 30px;
-    }
-    #timer div {
-        width: 60px;
-        height: 60px;
-    }
-    #timer span {
-        font-size: 28px;
-    }
-    #timer small {
-        font-size: 12px;
-    }
-    .button {
-        font-size: 25px;
-        padding: 16px 40px;
-    }
-    .rules h2 {
-        font-size: 38px;
-    }
-    .rules p {
-        font-family: 'LagunaC', sans-serif;
-        font-size: 18px;
-        line-height: 1.7;
-    }
-    .contact h2 {
-        font-size: 28px;
-    }
-    .rsvp h2 {
-        font-family: 'LagunaC', sans-serif;
-        font-size: 22px;
-        line-height: 1.5;
     }
 }
 
