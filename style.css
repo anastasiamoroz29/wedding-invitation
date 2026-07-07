@@ -459,7 +459,7 @@ p {
         width: 50px;
         height: auto;
         max-width: none;
-        margin: -50px auto 80px;  /* ← цветочек сильно ниже */
+        margin: -150px auto 80px;  /* ← цветочек сильно ниже */
     }
     .photo .htc-img {
         display: none;
