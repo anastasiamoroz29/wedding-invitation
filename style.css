@@ -456,7 +456,7 @@ p {
         width: 50px;
         height: auto;
         max-width: none;
-        margin: -70px auto 0px;
+        margin: -70px auto -30px;
     }
     .photo .htc-img {
         display: none;
